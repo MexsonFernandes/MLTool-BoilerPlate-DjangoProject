@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Web Service - ML Tool</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Bootstrap core CSS -->
+	{% load staticfiles %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="{% static 'css/mdb.min.css' %}" rel="stylesheet">
+    <!-- Your custom styles (optional) -->
+    <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
+	<!--don't look for favicon-->
+	<link rel="shortcut icon" href="about:blank">
+</head>
+
+<body>
+
+    <!--Main Navigation-->
+    <header>
+
+        <!-- Navbar -->
+        <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+            <div class="container">
+
+                <!-- Brand -->
+                <a class="navbar-brand waves-effect" href="/">
+                    <strong class="black-text">ML Tool</strong>
+                </a>
+
+                <!-- Collapse -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Links -->
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <!-- Left -->
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link waves-effect" href="#">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect" href="#upload">Upload</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect" href="#jobstatus">Status</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect" href="#team">Team</a>
+                        </li>
+						<li class="nav-item">
+                            <a class="nav-link waves-effect" href="#contact">Contact</a>
+                        </li>
+                    </ul>
+
+                    <!-- Right -->
+					Follow Us  @
+                    <ul class="navbar-nav nav-flex-icons">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link waves-effect" target="_blank">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link waves-effect" target="_blank">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </nav>
+        <!-- Navbar -->
+
+    </header>
+    <!--Main Navigation-->
+    {% if uploadstatus %}
+    <div class="container">
+  <!-- Modal -->
+      <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Message from server</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                {% if uploadstatus is True %}
+                    <p style="color:green;">Your data has been submitted successfully.<br><br/> <h2>JOB ID : {{ jobID }}</h2></p>
+                {% else %}
+                    <p style="color:red;">There is some error. Please upload it again.</p>
+                {% endif %}
+                <br/> Stay tuned to our mail.</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-elegant" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <!--Main layout-->
+    <main class="mt-5 pt-5">
+        <div class="container">
+
+            <!--Section: Jumbotron-->
+            <section class="card wow fadeIn" style="background-image: url({% static 'img/background.jpg' %});">
+
+                <!-- Content -->
+                <div class="card-body text-white text-center py-5 px-5 my-5">
+
+                    <h1 class="mb-4">
+                        <strong>Welcome to our Web Service</strong>
+                    </h1>
+                    <p>
+                        <strong></strong>
+                    </p>
+                    <p class="mb-4">
+                        <strong>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</strong>
+                    </p>
+                    <a href="#upload" class="btn btn-outline-white btn-lg">Start uploading
+                      
+                    </a>
+
+                </div>
+                <!-- Content -->
+            </section>
+            <!--Section: Jumbotron-->
+
+            <hr class="my-5" id="upload">
+        </div>
+		
+		<!--Panel to upload the sdf file or the sequence in the form-->
+		<div class="container">
+        <!--Panel-->
+			<div class="card text-center">
+				<div class="card-header elegant-color white-text" >
+					Upload Section
+				</div>
+				<div class="card-body">
+					<h4 class="card-title">Select your data file or input sequence</h4>
+					<form action="" method="post" enctype="multipart/form-data">
+						{% csrf_token %}
+                        <div class="login-form">
+							<br/>
+							<center>
+							<div class="input-group" style="width:75%">
+								<input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email" required="required" />
+							</div>
+							<br/>
+							
+							<b>Enter your input option below</b><br/>
+							   <select id="uploadOption" onchange="uploadForm()">
+								  <option value="file">File</option>
+								  <option value="sequence">Sequence</option>
+								</select>
+							  <div class="form-group">
+								<label class="col-md-4 control-label" for="file"></label>
+							  <div class="col-md-4" style="width:75%">
+								Select .csv file<br/><input required="required" id="file" name="file" accept=".csv" class="input-file" type="file">
+								</div>
+							  </div>
+									or
+								<br/>
+							  <div class="input-group" style="width:75%">
+								<span class="input-group-addon glyphicon glyphicon-user"></span>
+								<input class="form-control" id="inputwithtext" type="text" id="sequence" disabled="disabled" name="sequence" placeholder="Enter your input sequence" required="required"/>
+								  </div><br/>
+                                <div id="ustatus"></div>
+									<br/>
+                                <img src="{% static 'img/ajax-loader.gif' %}" id="loading-indicator" style="display:none" />
+							<input type="submit" value="Upload & Submit" class="btn btn-elegant btn-outline-light-dataset"/>
+							</center>
+					  </div>
+					</form>
+				</div>
+			</div>
+			<hr class="my-5" id="jobstatus">
+        <!--/.Panel-->
+		</div>
+		
+		
+		<!--Panel to to check job status-->
+		<div class="container">
+        <!--Panel-->
+			<div class="card text-center">
+				<div class="card-header elegant-color white-text">
+					Job Status Section
+				</div>
+				<div class="card-body">
+					<h4 class="card-title">Enter your Job ID below</h4>
+
+						<div class="login-form">
+							<br/>
+							<center>
+							<div class="input-group" style="width:55%">
+								<input type="text" class="form-control" name="jobid" id="jobid" placeholder="Job ID" required="required" />
+							</div>
+							<br/>
+                                <div id="jstatus"></div>
+							<input type="submit" onclick="checkStatus()" value="Check Status" class="btn btn-elegant btn-outline-light-dataset"/>
+							</center>
+						</div>
+
+				</div>
+			</div>
+			<hr class="my-5" id="team">
+        <!--/.Panel-->
+		</div>
+		
+		
+<!-- Section: Team v.1 -->
+		<section class="team-section text-center container">
+
+		  <!-- Section heading -->
+		  <h2 class="h1-responsive font-weight-bold my-5">Our amazing team</h2>
+
+		  <!-- Grid row -->
+		  <div class="row">
+			
+			<!-- Grid column -->
+			<div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
+			  <div class="avatar mx-auto">
+				<img src="{% static 'img/user.jpg' %}" width="255px" height="255px" class="rounded-circle z-depth-1" alt="Sample avatar">
+			  </div>
+			  <h5 class="font-weight-bold mt-4 mb-3">Founder 1</h5>
+			  <p class="text-uppercase blue-text"><strong>Data Scientist</strong></p>
+			  <ul class="list-unstyled mb-0">
+				<!-- Facebook -->
+				<a class="p-2 fa-lg fb-ic">
+				  <i class="fa fa-facebook blue-text"> </i>
+				</a>
+				<!-- Instagram -->
+				<a class="p-2 fa-lg ins-ic">
+				  <i class="fa fa-instagram blue-text"> </i>
+				</a>
+			  </ul>
+			</div>
+			<!-- Grid column -->
+		  
+			<!-- Grid column -->
+			<div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
+			  <div class="avatar mx-auto">
+				<img src="{% static 'img/user.jpg' %}" width="255px" height="255px" class="rounded-circle z-depth-1" alt="Image not found">
+			  </div>
+			  <h5 class="font-weight-bold mt-4 mb-3">Founder 2</h5>
+			  <p class="text-uppercase blue-text"><strong>Research Fellow</strong></p>
+			  <ul class="list-unstyled mb-0">
+				<!-- Facebook -->
+				<a class="p-2 fa-lg fb-ic">
+				  <i class="fa fa-facebook blue-text"> </i>
+				</a>
+				<!-- Instagram -->
+				<a class="p-2 fa-lg ins-ic">
+				  <i class="fa fa-instagram blue-text"> </i>
+				</a>
+			  </ul>
+			 
+			</div>
+			<!-- Grid column -->
+
+			<!-- Grid column -->
+			<div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
+			  <div class="avatar mx-auto">
+				<img src="{% static 'img/user.jpg' %}" width="255px" height="255px" class="rounded-circle z-depth-1" alt="Sample avatar">
+			  </div>
+			  <h5 class="font-weight-bold mt-4 mb-3">Founder 3</h5>
+			  <p class="text-uppercase blue-text"><strong>Developer</strong></p>
+			  <ul class="list-unstyled mb-0">
+				<!-- Facebook -->
+				<a class="p-2 fa-lg fb-ic">
+				  <i class="fa fa-facebook blue-text"> </i>
+				</a>
+				<!-- Instagram -->
+				<a class="p-2 fa-lg ins-ic">
+				  <i class="fa fa-instagram blue-text"> </i>
+				</a>
+			  </ul>
+			</div>
+			<!-- Grid column -->
+			
+			<!-- Grid column -->
+			<div class="col-lg-3 col-md-6 mb-lg-0 mb-5">
+			  <div class="avatar mx-auto">
+				<img src="{% static 'img/user.jpg' %}" width="255px" height="255px" class="rounded-circle z-depth-1" alt="Sample avatar">
+			  </div>
+			  <h5 class="font-weight-bold mt-4 mb-3">Founder 4</h5>
+			  <p class="text-uppercase blue-text"><strong>Developer</strong></p>
+			  <ul class="list-unstyled mb-0">
+				<!-- Facebook -->
+				<a class="p-2 fa-lg fb-ic">
+				  <i class="fa fa-facebook blue-text"> </i>
+				</a>
+				<!-- Instagram -->
+				<a class="p-2 fa-lg ins-ic">
+				  <i class="fa fa-instagram blue-text"> </i>
+				</a>
+			  </ul>
+			</div>
+			<!-- Grid column -->
+		  </div>
+		  <!-- Grid row -->
+		 <hr class="my-5" id="contact">
+		</section>
+		<!-- Section: Team v.1 -->
+		
+		
+		
+		<!--Section: Contact v.2-->
+		<section class="container" >
+
+			<!--Section heading-->
+			<h2 class="h1-responsive font-weight-bold text-center my-5">Contact us</h2>
+			<!--Section description-->
+			<p class="text-center w-responsive mx-auto mb-5">Do you have any questions? Please do not hesitate to contact us directly. Our team will come back to you within
+				matter of hours to help you.</p>
+
+			<div class="row">
+
+				<!--Grid column-->
+				<div class="col-md-9 mb-md-0 mb-5">
+					<form id="contact-form" name="contact-form" action="" method="POST">
+
+						<!--Grid row-->
+						<div class="row">
+
+							<!--Grid column-->
+							<div class="col-md-6">
+								<div class="md-form mb-0">
+									<input type="text" id="cname" name="cname" class="form-control">
+									<label for="cname" class="">Your name</label>
+								</div>
+							</div>
+							<!--Grid column-->
+
+							<!--Grid column-->
+							<div class="col-md-6">
+								<div class="md-form mb-0">
+									<input type="text" id="cemail" name="cemail" class="form-control">
+									<label for="cemail" class="">Your email</label>
+								</div>
+							</div>
+							<!--Grid column-->
+
+						</div>
+						<!--Grid row-->
+
+						<!--Grid row-->
+						<div class="row">
+							<div class="col-md-12">
+								<div class="md-form mb-0">
+									<input type="text" id="csubject" name="csubject" class="form-control">
+									<label for="csubject" class="">Subject</label>
+								</div>
+							</div>
+						</div>
+						<!--Grid row-->
+
+						<!--Grid row-->
+						<div class="row">
+
+							<!--Grid column-->
+							<div class="col-md-12">
+
+								<div class="md-form">
+									<textarea type="text" id="cmessage" name="cmessage" rows="2" class="form-control md-textarea"></textarea>
+									<label for="cmessage">Your message</label>
+								</div>
+
+							</div>
+						</div>
+						<div id="status"></div>
+						<!--Grid row-->
+						<div class="text-center text-md-left">
+							<a class="btn btn-elegant" onclick="validateForm()">Send</a>
+						</div>
+						
+					</form>
+
+					
+					
+				</div>
+				<!--Grid column-->
+
+				<!--Grid column-->
+				<div class="col-md-3 text-center">
+					<ul class="list-unstyled mb-0">
+						<li><i class="fa fa-map-marker fa-2x"></i>
+							<p>XYZ University, Place</p>
+						</li>
+
+						<li><i class="fa fa-phone mt-4 fa-2x"></i>
+							<p>+ 91 99999 99999</p>
+						</li>
+
+						<li><i class="fa fa-envelope mt-4 fa-2x"></i>
+							<p>something@domain.com</p>
+						</li>
+					</ul>
+				</div>
+				<!--Grid column-->
+
+			</div>
+
+		</section>
+<!--Section: Contact v.2-->
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <footer class="page-footer text-center font-small mdb-color darken-2 mt-4">
+
+        <!--Copyright-->
+        <div class="footer-copyright py-3">
+            © 2019 Copyright:
+            <a href=""> ML Tool </a>
+        </div>
+        <!--/.Copyright-->
+
+    </footer>
+    <!--/.Footer-->
+
+    <!-- SCRIPTS -->
+	
+	
+
+    <!-- JQuery -->
+    <script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="{% static 'js/mdb.min.js' %}"></script>
+    <!-- Initializations -->
+    <script type="text/javascript">
+        // Animations initialization
+        new WOW().init();
+    </script>
+
+    {% if uploadstatus %}
+    <script type="text/javascript">
+        $('#myModal').modal('show');
+    </script>
+    {% endif %}
+	
+	<script>
+		window.onload = function() { uploadForm();};
+		function uploadForm() {
+		if(document.getElementById("uploadOption").value == "file")
+			{
+				document.getElementById("file").removeAttribute("disabled");
+				document.getElementById("inputwithtext").setAttribute("disabled","disabled");
+			}
+		else
+			{
+				document.getElementById("inputwithtext").removeAttribute("disabled");
+				document.getElementById("file").setAttribute("disabled","disabled");
+			}
+		}
+		
+	</script>
+
+    <!--status pop up-->
+    <div class="container">
+  <!-- Modal -->
+      <div class="modal fade" id="SmyModal" role="dialog">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Message from server</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                <h2><b>Job ID :</b> <div id="result_id"></div> <br/><b>Status :</b><div id="result_status"></div></h2>
+
+                    <br/>
+                    <h3><b>Log File:</b><br/>
+                        <div id="result_log"></div>
+                    </h3>
+                        <div id="note"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-elegant" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--ends-->
+
+	<script type="text/javascript">
+	function validateForm() {
+			var name =  document.getElementById('cname').value;
+			if (name == "") {
+				document.getElementById('status').innerHTML = "Name cannot be empty";
+				document.getElementById('status').style = "color:red;"
+				return false;
+			}
+			var email =  document.getElementById('cemail').value;
+			if (email == "") {
+				document.getElementById('status').innerHTML = "Email cannot be empty";
+				document.getElementById('status').style = "color:red;"
+				return false;
+			} else {
+				var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				if(!re.test(email)){
+					document.getElementById('status').innerHTML = "Email format invalid";
+					document.getElementById('status').style = "color:red;"
+					return false;
+				}
+			}
+			var subject =  document.getElementById('csubject').value;
+			if (subject == "") {
+				document.getElementById('status').innerHTML = "Subject cannot be empty";
+				document.getElementById('status').style = "color:red;"
+				return false;
+			}
+			var message =  document.getElementById('cmessage').value;
+			if (message == "") {
+				document.getElementById('status').innerHTML = "Message cannot be empty";
+				document.getElementById('status').style = "color:red;"
+				return false;
+			}
+			document.getElementById('status').innerHTML = "Sending...";
+			document.getElementById('status').style = "color:green;"
+			document.getElementById('status').innerHTML = "Sending...";
+			formData = {
+				'cname'     : $('input[name=cname]').val(),
+				'cemail'    : $('input[name=cemail]').val(),
+				'csubject'  : $('input[name=csubject]').val(),
+				'cmessage'  : $('textarea[name=cmessage]').val(),
+				csrfmiddlewaretoken: '{{ csrf_token }}'
+			};
+
+
+			$.ajax({
+			url : "contact/",
+			type: "POST",
+			data : formData,
+			success: function(data, textStatus, jqXHR)
+			{
+				if (data == "success"){
+				    document.getElementById('status').innerHTML = "Message received successfully.";
+				    document.getElementById('status').style = "color:green;";
+				} else {
+				    document.getElementById('status').innerHTML = "There was some error.";
+				    document.getElementById('status').style = "color:red;";
+				}
+				if (data) //If mail was sent successfully, reset the form.
+				$('#contact-form').closest('form').find("input[type=text], textarea").val("");
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+				document.getElementById('status').style = "color:red;"
+				document.getElementById('status').innerHTML = "There is some error. Please send it again.";
+				
+			}
+			});
+
+		}
+
+	function checkStatus(){
+	var jobid =  document.getElementById('jobid').value;
+	        if (isNaN(jobid)) {
+				document.getElementById('jstatus').innerHTML = "Job ID should be numeric";
+				document.getElementById('jstatus').style = "color:red;"
+				return false;
+			}
+			if (jobid == "") {
+				document.getElementById('jstatus').innerHTML = "Job ID cannot be empty";
+				document.getElementById('jstatus').style = "color:red;"
+				return false;
+			}
+			document.getElementById('jstatus').style = "color:green;"
+			document.getElementById('jstatus').innerHTML = "Checking...";
+			formData = {
+				'jobid'     : $('input[name=jobid]').val(),
+				csrfmiddlewaretoken: '{{ csrf_token }}'
+			};
+			$.ajax({
+			url : "checkStatus/",
+			type: "POST",
+			data : formData,
+			success: function(data, textStatus, jqXHR)
+			{
+				if (data.response == "success"){
+				    document.getElementById('jstatus').innerHTML = "";
+				    document.getElementById('jstatus').style = "color:green;";
+				    document.getElementById('result_log').innerHTML = data.result_log;
+				    document.getElementById('result_id').innerHTML = data.result_id;
+				    document.getElementById('result_status').innerHTML = data.result_status;
+				    if(data.result_status == "COMPLETED"){
+				        document.getElementById('result_status').style = "color:green;"
+				        document.getElementById('note').innerHTML = "Result has been mailed.";
+				    }else if(data.result_status == "COMPLETED"){
+				        document.getElementById('result_status').style = "color:red;";
+				        document.getElementById('note').innerHTML = "We apologize. Please mail us your data if its urgent.";
+				    }else
+				        document.getElementById('note').innerHTML = "Stay tuned to our mail.";
+				    $('#SmyModal').modal('show');
+				} else {
+				    document.getElementById('jstatus').innerHTML = "Error checking status. Please check your ID.";
+				    document.getElementById('jstatus').style = "color:red;";
+				}
+				if (data) //If mail was sent successfully, reset the form.
+				$('#jobid').val("");
+			},
+			error: function (jqXHR, textStatus, errorThrown)
+			{
+				document.getElementById('jstatus').style = "color:red;"
+				document.getElementById('jstatus').innerHTML = "There is some error. Please send it again.";
+			}
+			});
+	}
+	</script>
+</body>
+
+</html>

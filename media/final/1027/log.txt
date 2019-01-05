@@ -1,0 +1,16 @@
+
+Step 2: Variable Declaration
+Step 3: Model Loading
+Step 4: Data Loading     Area       ED   Energy SS ResidueLength PairNumber
+1 4722.92  4019.64 -1600.00 13            79        317
+2 4059.12  2191.03 -1146.08 20            54        165
+3 4773.56  2787.99 -1263.38 46            67        224
+4 8271.27  9545.98 -2848.93 26           138        554
+5 7102.16 14148.80 -2381.15 85           120        809
+6 7015.24  7336.79 -1699.80 22            95        427
+
+Step 5: Prediction using ->  randomForest       1        2        3        4        5        6 
+2.333019 1.566696 3.418853 3.833038 2.971063 4.160433 
+
+Step 6: Saving Results
+Done
