@@ -1,14 +1,14 @@
-# `Boiler Plate for developing ML Web App`
+# `Boiler Plate for Django ML Web Projects`
 
-This Django app was originally developed for MLTool.in website. I have altered some of the code, so that it can be used as a boiler plate for other Machine Learning web apps. You can readily implement this app for any of your projects.
+This Django project was originally developed for MLTool.in website. I have altered some of the code, so that it can be used as a boiler plate for other Machine Learning web apps. You can readily implement this project in any of your work.
 
 ## Prerequisite
   * Make sure python 3.6 is installed.
   * Install R >= 3.4 `sudo apt-get install r-base`.
 
 ## Initial setup
-  * Clone repository `git clone https://github.com/MexsonFernandes/MLTool-BoilerPlate-DjangoWebApp`.
-  * `cd MLTool-BoilerPlate-DjangoWebApp`
+  * Clone repository `git clone https://github.com/MexsonFernandes/MLTool-BoilerPlate-DjangoProject`.
+  * `cd MLTool-BoilerPlate-DjangoProject`
   * Install required dependencies.
     * run `pip3 install -r requirements.txt`.
   * Add your email id and password in project/settings.py file.
