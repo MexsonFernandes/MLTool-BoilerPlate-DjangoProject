@@ -2,6 +2,8 @@
 
 This Django project was originally developed for MLTool.in website. I have altered some of the code, so that it can be used as a boiler plate for other Machine Learning web apps. You can readily implement this project in any of your work.
 
+<a href='https://ko-fi.com/Y8Y31LBT4' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://cdn.ko-fi.com/cdn/kofi3.png?v=2' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
 ## Prerequisite
   * Make sure python 3.6 is installed.
   * Install R >= 3.4 `sudo apt-get install r-base`.
