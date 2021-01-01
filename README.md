@@ -1,4 +1,5 @@
 # `Boiler Plate for Django ML Web Projects`
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FMexsonFernandes%2FMLTool-BoilerPlate-DjangoProject&count_bg=%232A379E&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
 This Django project was originally developed for MLTool.in website. I have altered some of the code, so that it can be used as a boiler plate for other Machine Learning web apps. You can readily implement this project in any of your work.
 
